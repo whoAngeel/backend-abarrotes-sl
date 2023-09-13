@@ -8,14 +8,19 @@
 
 <h1 align="center">API SanLuis</h1>
 
-<p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/{{github}}/{{repository}}?color=56BEB8">
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/{{github}}/{{repository}}?color=56BEB8">
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/{{github}}/{{repository}}?color=56BEB8">
-  <img alt="License" src="https://img.shields.io/github/license/{{github}}/{{repository}}?color=56BEB8">
-  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/{{github}}/{{repository}}?color=56BEB8" /> -->
-  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/{{github}}/{{repository}}?color=56BEB8" /> -->
-  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/{{github}}/{{repository}}?color=56BEB8" /> -->
+<p align="center" style="display:flex; justify-content:space-evenly;">
+  <img width="60"  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" />
+
+  <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
+
+<img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
+
+ <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
+ <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" />
+ <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sequelize/sequelize-original.svg" />
+
+
+
 </p>
 
 <hr> 
@@ -39,10 +44,10 @@ Antes de iniciar debes tener [Git](https://git-scm.com) y [Node](https://nodejs.
 
 ```bash
 # Clone this project
-$ git clone https://github.com/{{github}}/{{repository}}
+$ git clone https://github.com/whoAngeel/backend-abarrotes-sl.git
 
 # Access
-$ cd {{repository}}
+$ cd backend-abarrotes-sl
 
 # Install dependencies
 $ npm i
