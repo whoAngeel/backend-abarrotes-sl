@@ -10,12 +10,8 @@
 
 <p align="center" style="display:flex; justify-content:space-evenly;">
   <img width="60"  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" />
-
   <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
-
 <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
-
- <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
  <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" />
  <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sequelize/sequelize-original.svg" />
 
@@ -26,9 +22,9 @@
 <hr> 
 
 <p align="center">
-  <a href="#dart-about">Descripción</a> &#xa0; | &#xa0; 
-  <a href="#sparkles-instalation">Instalación</a> &#xa0; | &#xa0;
-  <a href="#rocket-technologies">Uso</a> 
+  <a href="#descripción">Descripción</a> &#xa0; | &#xa0; 
+  <a href="#Requirimientos">Requirimientos</a> &#xa0; | &#xa0; 
+  <a href="#Instalación">Instalación</a> 
 </p>
 
 
