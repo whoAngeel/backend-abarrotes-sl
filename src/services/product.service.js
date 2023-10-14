@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom');
+const sequelize = require('../libs/sequelize');
 
 class ProductsService {
 
@@ -15,12 +16,8 @@ class ProductsService {
     delete(id) {
 
     }
-    findOne(id) {
-        // const product = database.find(id)
-        // if (!product) {
-        //     throw boom.notFound("Producto no encontrado")
-        // }
-        throw boom.notFound("Producto no encontrado")
+    async findOne(id) {
+        const rta = await sequelize.query
     }
     findAll() {
 
