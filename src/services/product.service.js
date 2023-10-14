@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const sequelize = require('../libs/sequelize');
+const { models } = require('../libs/sequelize');
 
 class ProductsService {
 
@@ -7,20 +8,34 @@ class ProductsService {
 
     }
 
-    create() {
-
+    async create(data) {
+        const newProduct = await models.Product.create(data)
+        return newProduct
     }
-    update(id, data) {
+
+    async update(id, changes) {
         // if(!product)
+        const product = this.findOne(id)
+        const newProd = await product.update(changes)
+        return newProd
     }
-    delete(id) {
-
+    async delete(id) {
+        const producto = this.findOne(id)
+        await producto.destroy();
+        return {
+            message: "Producto eliminado"
+        }
     }
     async findOne(id) {
-        const rta = await sequelize.query
+        const product = await models.Product.findByPk(id)
+        if (!product) {
+            throw boom.notFound("Producto no encontrado")
+        }
+        return product
     }
-    findAll() {
-
+    async findAll() {
+        const products = await models.Product.findAll()
+        return products
     }
 }
 
