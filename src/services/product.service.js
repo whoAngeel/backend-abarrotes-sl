@@ -16,10 +16,11 @@ class ProductsService {
 
     }
     findOne(id) {
-        const product = database.find(id)
-        if (!product) {
-            throw boom.notFound("Producto no encontrado")
-        }
+        // const product = database.find(id)
+        // if (!product) {
+        //     throw boom.notFound("Producto no encontrado")
+        // }
+        throw boom.notFound("Producto no encontrado")
     }
     findAll() {
 
