@@ -77,6 +77,6 @@ class Product extends Model {
 
 module.exports = {
     PRODUCT_TABLE,
-    productSchema,
+    ProductSchema,
     Product
 }
