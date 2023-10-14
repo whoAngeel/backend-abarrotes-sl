@@ -9,8 +9,8 @@ const app = express()
 app.use(cors());
 app.use(morgan("dev"))
 
-app.get('', (req, res) => {
-    res.send("Hola mundo");
+app.get('/', (req, res) => {
+    res.send("Servidor");
 })
 
 app.listen(3000, () => {
