@@ -1,10 +1,12 @@
 const express = require('express');
 const ProductsService = require('../services/product.service');
+const validatorHandler = require('../middlewares/validator.handler');
+const { createProductSchema, getProductSchema, updateProductSchema } = require('../schemas/product.schema');
 
 const router = express.Router()
 const service = new ProductsService()
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const products = [];
         res.json(products)
@@ -13,35 +15,42 @@ router.get('/', (req, res, next) => {
     }
 })
 
-router.get('/:product', (req, res, next) => {
+router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
     try {
-        const prod = service.findOne(23)
-        console.log(prod);
-        res.send('obtener producto por id')
+        const id = req.params.id
+        res.json({
+            message: 'endpoint para obtener un producto por id: ' + id
+        })
     } catch (error) {
         next(error)
     }
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', validatorHandler(createProductSchema, 'body'), async (req, res, next) => {
     try {
-        res.send('crear producto')
+        res.json({
+            message: 'endpoint para crear un producto'
+        })
     } catch (error) {
         next(error)
     }
 })
 
-router.patch('/:product', (req, res, next) => {
+router.patch('/:id', validatorHandler(getProductSchema, 'params'), validatorHandler(updateProductSchema, 'body'), async (req, res, next) => {
     try {
-        res.send('ruta para editar un producto')
+        res.json({
+            message: 'ruta para editar un producto'
+        })
     } catch (error) {
         next(error)
     }
 })
 
-router.delete('/:product', (req, res, next) => {
+router.delete('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
     try {
-        res.send("eliminar producto")
+        res.json({
+            message: "eliminar producto"
+        })
     } catch (error) {
         next(error)
     }
