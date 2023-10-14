@@ -17,7 +17,7 @@ app.use(cors());
 app.use(morgan("dev"))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use("/api/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerSpec))) // endpoint para mostrar la documentacion
+app.use("/api/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerSpec))) // endpoint  para mostrar la documentacion
 
 // ROUTES
 app.get('/', (req, res) => {
