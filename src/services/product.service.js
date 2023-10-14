@@ -13,8 +13,9 @@ class ProductsService {
     delete(id) {
 
     }
-    find(id) {
-
+    findOne(id) {
+        const name = this.getTotal()
+        return name
     }
     findAll() {
 

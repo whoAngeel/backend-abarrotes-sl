@@ -3,6 +3,7 @@ const debug = require('debug')("api:index");
 const cors = require('cors');
 const morgan = require('morgan');
 const routerApi = require('./routes')
+const { errorHandler, logErrors } = require('./middlewares/error.handler');
 
 const app = express()
 
@@ -17,6 +18,10 @@ app.get('/', (req, res) => {
     res.send("Servidor");
 })
 routerApi(app)
+
+// middlewares de errores
+app.use(logErrors)
+app.use(errorHandler)
 
 app.listen(3000, () => {
     debug("Servidor ejecutandose en http://localhost:3000")
