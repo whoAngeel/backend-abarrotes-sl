@@ -14,7 +14,7 @@
 <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
  <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" />
  <img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sequelize/sequelize-original.svg" />
-<img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"/>
+<img width="60" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"/>
 
 
 </p>
@@ -28,15 +28,15 @@
 </p>
 
 
-## :dart: Descripción ##
+## :dart: Descripción 
 
 La API de SanLuis Abarrotes es una aplicación RESTful que sirve como el backend para la comunicación con el servidor y la base de datos.
 
-## :white_check_mark: Requirimientos ##
+## :white_check_mark: Requirimientos 
 
-Antes de iniciar debes tener [Git](https://git-scm.com), [Docker] y [Node](https://nodejs.org/en/) instalados.
+Antes de iniciar debes tener [Git](https://git-scm.com), [Docker](https://www.docker.com/products/docker-desktop/) y [Node](https://nodejs.org/en/) instalados.
 
-## :checkered_flag: Instalación ##
+## :checkered_flag: Instalación 
 
 ```bash
 # Clone this project
