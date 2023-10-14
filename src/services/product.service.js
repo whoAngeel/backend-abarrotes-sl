@@ -1,3 +1,5 @@
+const boom = require('@hapi/boom');
+
 class ProductsService {
 
     constructor() {
@@ -8,14 +10,16 @@ class ProductsService {
 
     }
     update(id, data) {
-
+        // if(!product)
     }
     delete(id) {
 
     }
     findOne(id) {
-        const name = this.getTotal()
-        return name
+        const product = database.find(id)
+        if (!product) {
+            throw boom.notFound("Producto no encontrado")
+        }
     }
     findAll() {
 
