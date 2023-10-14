@@ -36,7 +36,7 @@ const ProductSchema = {
         field: 'img_url',
     },
     stock: {
-        type: DataTypes.NUMBER
+        type: DataTypes.INTEGER
     },
     brand: {
         type: DataTypes.STRING,
@@ -65,7 +65,7 @@ class Product extends Model {
         // models
     }
 
-    static cofig(sequelize) {
+    static config(sequelize) {
         return {
             sequelize,
             tableName: PRODUCT_TABLE,

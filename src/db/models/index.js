@@ -1,7 +1,7 @@
-const { PRODUCT_TABLE, Product, productSchema } = require('./product.model');
+const { PRODUCT_TABLE, Product, ProductSchema } = require('./product.model');
 
 function setupModels(sequelize) {
-    Product.init(productSchema, Product.cofig(sequelize))
+    Product.init(ProductSchema, Product.config(sequelize))
 }
 
 module.exports = setupModels
