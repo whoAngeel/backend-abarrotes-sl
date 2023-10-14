@@ -50,7 +50,7 @@ const updateProductSchema = joi.object({
     createdAt,
 })
 
-const deleteProductSchema = joi.object({
+const getProductSchema = joi.object({
     id: id.required()
 })
 
@@ -58,5 +58,5 @@ const deleteProductSchema = joi.object({
 module.exports = {
     createProductSchema,
     updateProductSchema,
-    deleteProductSchema
+    getProductSchema
 }
