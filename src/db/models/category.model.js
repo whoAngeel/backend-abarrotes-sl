@@ -11,6 +11,7 @@ const CategorySchema = {
     },
     name: {
         allowNull: false,
+        unique: true,
         type: DataTypes.STRING
     },
     description: {
@@ -21,9 +22,7 @@ const CategorySchema = {
         field: 'created_at',
         allowNull: false,
         defaultValue: Sequelize.NOW
-    },
-    onDelete: 'RESTRICT',
-    onUpdate: 'RESTRICT'
+    }
 }
 
 class Category extends Model {
