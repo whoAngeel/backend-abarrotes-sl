@@ -5,8 +5,12 @@ const router = express.Router()
 const service = new ProductsService()
 
 router.get('/', (req, res, next) => {
-    const products = [];
-    res.json(products)
+    try {
+        const products = [];
+        res.json(products)
+    } catch (error) {
+        next(error)
+    }
 })
 
 router.get('/:product', (req, res, next) => {
@@ -36,7 +40,11 @@ router.patch('/:product', (req, res, next) => {
 })
 
 router.delete('/:product', (req, res, next) => {
-    res.send("eliminar producto")
+    try {
+        res.send("eliminar producto")
+    } catch (error) {
+        next(error)
+    }
 })
 
 module.exports = router
