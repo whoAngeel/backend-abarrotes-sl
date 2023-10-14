@@ -2,6 +2,11 @@ const express = require('express');
 const debug = require('debug')("api:index");
 const cors = require('cors');
 const morgan = require('morgan');
+//swagger
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerSpec = require('./swaggerSpec');
+
 const routerApi = require('./routes')
 const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/error.handler');
 
@@ -12,6 +17,7 @@ app.use(cors());
 app.use(morgan("dev"))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use("/api/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerSpec))) // endpoint para mostrar la documentacion
 
 // ROUTES
 app.get('/', (req, res) => {
