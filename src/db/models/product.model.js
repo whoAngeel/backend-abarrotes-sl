@@ -15,7 +15,7 @@ const ProductSchema = {
     },
     purchasePrice: {
         allowNull: false,
-        type: DataTypes.DOUBLE,
+        type: DataTypes.DECIMAL(5, 2),
         field: 'purchase_price'
     },
     salePrice: {
