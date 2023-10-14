@@ -8,7 +8,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerSpec = require('./swaggerSpec');
 
 const routerApi = require('./routes')
-const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/error.handler');
+const { errorHandler, logErrors, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
 
 const app = express()
 
@@ -28,6 +28,7 @@ routerApi(app)
 // middlewares de errores
 app.use(logErrors)
 app.use(boomErrorHandler)
+app.use(ormErrorHandler)
 app.use(errorHandler)
 
 app.listen(3000, () => {
