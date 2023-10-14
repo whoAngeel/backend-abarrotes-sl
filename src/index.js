@@ -3,7 +3,7 @@ const debug = require('debug')("api:index");
 const cors = require('cors');
 const morgan = require('morgan');
 const routerApi = require('./routes')
-const { errorHandler, logErrors } = require('./middlewares/error.handler');
+const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/error.handler');
 
 const app = express()
 
@@ -21,6 +21,7 @@ routerApi(app)
 
 // middlewares de errores
 app.use(logErrors)
+app.use(boomErrorHandler)
 app.use(errorHandler)
 
 app.listen(3000, () => {
