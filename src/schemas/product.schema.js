@@ -32,7 +32,6 @@ const createProductSchema = joi.object({
     measureUnit,
     idProvider: idProvider.required(),
     idCategory: idCategory.required(),
-    createdAt: createdAt.required()
 })
 
 const updateProductSchema = joi.object({
@@ -47,7 +46,6 @@ const updateProductSchema = joi.object({
     measureUnit,
     idProvider,
     idCategory,
-    createdAt,
 })
 
 const getProductSchema = joi.object({
