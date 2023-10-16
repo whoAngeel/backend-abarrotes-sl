@@ -40,8 +40,8 @@ router.post('/',
     })
 
 router.patch('/:id',
-    validatorHandler(getProductSchema, 'params'),
-    validatorHandler(updateProductSchema, 'body'), async (req, res, next) => {
+    validatorHandler(getProviderSchema, 'params'),
+    validatorHandler(updateProviderSchema, 'body'), async (req, res, next) => {
         try {
             const { id } = req.params
             const changes = req.body
@@ -53,7 +53,7 @@ router.patch('/:id',
     })
 
 router.delete('/:id',
-    validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
+    validatorHandler(getProviderSchema, 'params'), async (req, res, next) => {
         try {
             const { id } = req.params
             const rta = await service.delete(id)

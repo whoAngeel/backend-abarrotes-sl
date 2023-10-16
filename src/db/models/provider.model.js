@@ -5,6 +5,7 @@ const PROVIDER_TABLE = 'providers'
 const ProviderSchame = {
     id: {
         type: DataTypes.INTEGER(10).UNSIGNED,
+        primaryKey: true,
     },
     name: {
         allowNull: false,
