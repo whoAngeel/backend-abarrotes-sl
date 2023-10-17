@@ -5,7 +5,9 @@ class EmployeesService {
     constructor() { }
 
     async findAll() {
-        return await models.Employee.findAll()
+        return await models.Employee.findAll({
+            include: ['user']
+        })
     }
 
     async create(data) {
@@ -14,7 +16,9 @@ class EmployeesService {
     }
 
     async findOne(id) {
-        const employee = await models.Employee.findByPk(id)
+        const employee = await models.Employee.findByPk(id, {
+            include: ['user']
+        })
         if (!employee) { throw boom.notFound('Empleado no encontrado') }
         return employee;
     }
