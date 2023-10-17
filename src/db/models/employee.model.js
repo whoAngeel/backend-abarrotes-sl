@@ -30,7 +30,7 @@ const EmployeeSchema = {
         type: DataTypes.STRING
     },
     salary: {
-        type: DataTypes.DECIMAL(5, 2)
+        type: DataTypes.DECIMAL(8, 2)
     },
     createdAt: {
         type: DataTypes.DATE,

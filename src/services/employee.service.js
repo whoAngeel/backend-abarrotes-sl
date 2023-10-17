@@ -9,11 +9,12 @@ class EmployeesService {
     }
 
     async create(data) {
-        // TODO
+        const newEmployee = await models.Employee.create(data)
+        return newEmployee
     }
 
     async findOne(id) {
-        const employee = await models.Employee.findByPk()
+        const employee = await models.Employee.findByPk(id)
         if (!employee) { throw boom.notFound('Empleado no encontrado') }
         return employee;
     }
