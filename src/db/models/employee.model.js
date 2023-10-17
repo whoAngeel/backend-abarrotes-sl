@@ -41,6 +41,7 @@ const EmployeeSchema = {
     userId: {
         field: 'user_id',
         allowNull: false,
+        unique: true,
         type: DataTypes.INTEGER.UNSIGNED,
         references: {
             model: USER_TABLE,
