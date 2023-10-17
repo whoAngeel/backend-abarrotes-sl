@@ -20,11 +20,6 @@ const UsersSchema = {
     },
     role: {
         allowNull: false,
-        defaultValue: 'employee',
-        type: DataTypes.ENUM('admin', 'manager', 'dev')
-    },
-    email: {
-        allowNull: false,
         type: DataTypes.STRING
     },
     createdAt: {
@@ -49,6 +44,6 @@ class User extends Model {
 
 module.exports = {
     UsersSchema,
-    UsersSchema,
+    USER_TABLE,
     User
 }
