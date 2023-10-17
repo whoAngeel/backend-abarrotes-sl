@@ -11,8 +11,15 @@ class EmployeesService {
     }
 
     async create(data) {
-        const newEmployee = await models.Employee.create(data)
-        return newEmployee
+        const newUser = await models.User.create(data.user)
+        const newEmployee = await models.Employee.create({
+            ...data,
+            userId: newUser.id
+        })
+        return {
+            message: "Empleado y usuario creado correctamente",
+            employee: newEmployee,
+        }
     }
 
     async findOne(id) {
