@@ -1,5 +1,4 @@
 const boom = require('@hapi/boom');
-const sequelize = require('../libs/sequelize');
 const { models } = require('../libs/sequelize');
 
 class ProductsService {
