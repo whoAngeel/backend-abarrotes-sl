@@ -31,3 +31,5 @@ class SalesService {
         return { id }
     }
 }
+
+module.exports = SalesService
