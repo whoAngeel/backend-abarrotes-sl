@@ -26,6 +26,17 @@ const SaleSchema = {
         field: 'created_at',
         allowNull: false,
         defaultValue: Sequelize.NOW
+    },
+    total: {
+        type: DataTypes.VIRTUAL,
+        get() {
+            if (this.items.length > 0) {
+                return this.items.reduce((total, item) => {
+                    return total + (item.salePrice * item.SaleProduct.amount)
+                }, 0)
+            }
+            return 0
+        }
     }
 }
 
