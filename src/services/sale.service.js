@@ -17,16 +17,16 @@ class SalesService {
             include: [{
                 association: 'employee',
                 include: ['user']
-            }],
-        }, 'items')
+            }, 'items'],
+        })
         if (!sale) throw boom.notFound("Venta no encontrada")
         return sale
     }
-    async addItem(data) {
-        const newOrderProduct = await models.OrderProduct.create(data)
-        return newOrderProduct
-    }
 
+    async addItem(data) {
+        const newItem = await models.SaleProduct.create(data)
+        return newItem
+    }
 
     async update(id, changes) {// no se va a poder actualizar una venta
         return { id, changes }
