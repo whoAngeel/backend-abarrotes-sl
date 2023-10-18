@@ -16,8 +16,8 @@ const imgUrl = joi.string().uri()
 const stock = joi.number().integer().min(0)
 const brand = joi.string().max(50)
 const measureUnit = joi.string()
-const idProvider = joi.number().integer().min(1)
-const idCategory = joi.number().integer().min(1)
+const providerId = joi.number().integer().min(1)
+const categoryId = joi.number().integer().min(1)
 const createdAt = joi.string().isoDate()
 
 const createProductSchema = joi.object({
@@ -30,8 +30,8 @@ const createProductSchema = joi.object({
     stock: stock.required(),
     brand,
     measureUnit,
-    idProvider: idProvider.required(),
-    idCategory: idCategory.required(),
+    providerId: providerId.required(),
+    categoryId: categoryId.required(),
 })
 
 const updateProductSchema = joi.object({
@@ -44,8 +44,8 @@ const updateProductSchema = joi.object({
     stock,
     brand,
     measureUnit,
-    idProvider,
-    idCategory,
+    providerId,
+    categoryId,
 })
 
 const getProductSchema = joi.object({
