@@ -19,6 +19,7 @@ function setupModels(sequelize) {
     Category.assciate(sequelize.models)
     Provider.associate(sequelize.models)
     Sale.associate(sequelize.models)
+    Product.associate(sequelize.models)
 
 }
 

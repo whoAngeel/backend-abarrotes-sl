@@ -1,7 +1,7 @@
 const validatorHandler = require('../middlewares/validator.handler');
 const { Router } = require('express');
 const SaleService = require('../services/sale.service');
-const { createSaleSchema, getSaleSchema } = require('../schemas/sale.schema');
+const { createSaleSchema, getSaleSchema, addItemSchema } = require('../schemas/sale.schema');
 
 const router = Router()
 const service = new SaleService()
@@ -41,9 +41,11 @@ router.post('/',
     })
 
 // TODO hacer el endpoint para agregar un item
-router.post('/add-item', async (req, res, next) => {
+router.post('/add-item', validatorHandler(addItemSchema, 'body'), async (req, res, next) => {
     try {
         const body = req.body
+        const newItem = await service.addItem(body)
+        res.status(201).json(newItem)
         // const newitem = await.service.
     } catch (error) {
         next(error)

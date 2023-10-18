@@ -8,7 +8,9 @@ class ProductsService {
     }
 
     async create(data) {
-        const newProduct = await models.Product.create(data)
+        const newProduct = await models.Product.create(data, {
+            include: ['category', 'provider']
+        })
         return newProduct
     }
 
@@ -26,14 +28,18 @@ class ProductsService {
         }
     }
     async findOne(id) {
-        const product = await models.Product.findByPk(id)
+        const product = await models.Product.findByPk(id, {
+            include: ['category', 'provider']
+        })
         if (!product) {
             throw boom.notFound("Producto no encontrado")
         }
         return product
     }
     async findAll() {
-        const products = await models.Product.findAll()
+        const products = await models.Product.findAll({
+            include: ['category', 'provider']
+        })
         return products
     }
 }

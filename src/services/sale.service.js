@@ -22,6 +22,11 @@ class SalesService {
         if (!sale) throw boom.notFound("Venta no encontrada")
         return sale
     }
+    async addItem(data) {
+        const newOrderProduct = await models.OrderProduct.create(data)
+        return newOrderProduct
+    }
+
 
     async update(id, changes) {// no se va a poder actualizar una venta
         return { id, changes }
