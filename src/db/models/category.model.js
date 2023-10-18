@@ -7,7 +7,7 @@ const CategorySchema = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER.UNSIGNED
     },
     name: {
         allowNull: false,
@@ -26,8 +26,11 @@ const CategorySchema = {
 }
 
 class Category extends Model {
-    static assciate() {
-
+    static assciate(models) {
+        this.hasMany(models.Product, {
+            as: 'products',
+            foreignKey: 'categoryId'
+        })
     }
 
     static config(sequelize) {

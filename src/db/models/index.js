@@ -11,6 +11,8 @@ function setupModels(sequelize) {
     Employee.init(EmployeeSchema, Employee.config(sequelize))
     Employee.associate(sequelize.models)
     User.associate(sequelize.models)
+    Category.assciate(sequelize.models)
+    Provider.associate(sequelize.models)
 }
 
 module.exports = setupModels

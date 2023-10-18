@@ -11,10 +11,13 @@ class EmployeesService {
     }
 
     async create(data) {
-        const newUser = await models.User.create(data.user)
-        const newEmployee = await models.Employee.create({
-            ...data,
-            userId: newUser.id
+        // const newUser = await models.User.create(data.user)
+        // const newEmployee = await models.Employee.create({
+        //     ...data,
+        //     userId: newUser.id
+        // })
+        const newEmployee = await models.Employee.create(data, {
+            include: ['user']
         })
         return {
             message: "Empleado y usuario creado correctamente",

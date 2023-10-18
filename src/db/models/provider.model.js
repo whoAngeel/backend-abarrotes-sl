@@ -4,7 +4,7 @@ const PROVIDER_TABLE = 'providers'
 
 const ProviderSchame = {
     id: {
-        type: DataTypes.INTEGER(10).UNSIGNED,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -29,7 +29,12 @@ const ProviderSchame = {
 }
 
 class Provider extends Model {
-    static associate(models) { }
+    static associate(models) {
+        this.hasMany(models.Product, {
+            as: 'products',
+            foreignKey: 'providerId'
+        })
+    }
 
     static config(sequelize) {
         return {
