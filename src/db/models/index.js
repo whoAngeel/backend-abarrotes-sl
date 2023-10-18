@@ -4,6 +4,7 @@ const { Provider, ProviderSchame } = require('./provider.model');
 const { User, UsersSchema } = require('./user.model');
 const { Employee, EmployeeSchema } = require('./employee.model');
 const { Sale, SaleSchema } = require('./sale.model');
+const { SaleProduct, SaleProductSchema } = require('./sale-product.model');
 function setupModels(sequelize) {
     Product.init(ProductSchema, Product.config(sequelize))
     Category.init(CategorySchema, Category.config(sequelize))
@@ -11,6 +12,7 @@ function setupModels(sequelize) {
     User.init(UsersSchema, User.config(sequelize))
     Sale.init(SaleSchema, Sale.config(sequelize));
     Employee.init(EmployeeSchema, Employee.config(sequelize))
+    SaleProduct.init(SaleProductSchema, SaleProduct.config(sequelize))
 
     User.associate(sequelize.models)
     Employee.associate(sequelize.models)

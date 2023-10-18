@@ -34,7 +34,14 @@ class Sale extends Model {
         this.belongsTo(models.Employee, {
             as: 'employee'
         });
+        this.belongsToMany(models.Product, {
+            as: 'items',
+            through: models.SaleProduct,
+            foreignKey: 'saleId',
+            otherKey: 'productId'
+        })
     }
+
     static config(sequelize) {
         return {
             sequelize,
