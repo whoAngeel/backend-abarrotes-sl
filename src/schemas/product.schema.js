@@ -15,6 +15,9 @@ const providerId = joi.number().integer().min(1)
 const categoryId = joi.number().integer().min(1)
 const createdAt = joi.string().isoDate()
 
+const limit = joi.number().integer()
+const offset = joi.number().integer()
+
 const createProductSchema = joi.object({
     name: name.required(),
     purchasePrice: purchasePrice.required(),
@@ -46,10 +49,16 @@ const updateProductSchema = joi.object({
 const getProductSchema = joi.object({
     id: id.required()
 })
+const queryProductSchema = joi.object({
+    offset,
+    limit
+})
+
 
 
 module.exports = {
     createProductSchema,
     updateProductSchema,
-    getProductSchema
+    getProductSchema,
+    queryProductSchema
 }
