@@ -58,6 +58,10 @@ class Employee extends Model {
         this.belongsTo(models.User, {
             as: 'user'
         })
+        this.hasMany(models.Sale, {
+            as: 'sales',
+            foreignKey: 'employeeId'
+        })
     }
 
     static config(sequelize) {

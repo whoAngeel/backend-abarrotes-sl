@@ -81,10 +81,13 @@ const ProductSchema = {
 class Product extends Model {
     // para definir las asociaciones
     static associate(models) {
-        this.hasMany(models.Product, {
-            as: 'product',
-            foreignKey: 'categoryId'
+        this.belongsTo(models.Category, {
+            as: 'category'
         })
+        this.belongsTo(models.Provider, {
+            as: 'provider'
+        })
+
     }
 
     static config(sequelize) {
