@@ -28,9 +28,10 @@ router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res
 
 router.post('/', validatorHandler(createProductSchema, 'body'), async (req, res, next) => {
     try {
-        res.json({
-            message: 'endpoint para crear un producto'
-        })
+        // const {id} = req.params
+        const body = req.body;
+        const newProduct = await service.create(body)
+        res.status(201).json(newProduct)
     } catch (error) {
         next(error)
     }

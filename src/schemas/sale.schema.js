@@ -15,7 +15,9 @@ const createSaleSchema = joi.object({
 })
 
 const addItemSchema = joi.object({
-    // TODO hacer el esquema para agregar un item
+    saleId: saleId.required(),
+    productId: productId.required(),
+    amount: amount.required()
 })
 
 module.exports = {

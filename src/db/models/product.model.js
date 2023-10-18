@@ -43,11 +43,6 @@ const ProductSchema = {
     brand: {
         type: DataTypes.STRING,
     },
-    idProvider: {
-        type: DataTypes.INTEGER,
-        field: 'id_provider',
-        allowNull: false,
-    },
     categoryId: {
         type: DataTypes.INTEGER.UNSIGNED,
         field: 'category_id',
