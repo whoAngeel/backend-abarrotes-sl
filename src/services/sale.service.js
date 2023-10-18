@@ -24,6 +24,29 @@ class SalesService {
     }
 
     async addItem(data) {
+        const { saleId, productId, amount } = data;
+        try {
+            const product = await models.Product.findByPk(productId)
+            // buscar producto
+            if (product) {
+                // verificar la disponibilidad
+                if (product.stock >= amount) {
+                    // si hay suficiente stock se resta la cantidad al stock y se guarda
+                    product.stock -= amount
+                    await product.save()
+
+                    // agregar el producto a la venta
+                    const newItem = await models.SaleProduct.create(data)
+                    return newItem
+                } else {
+                    throw boom.badData("Stock insuficiente de este producto")
+                }
+            } else {
+                throw boom.notFound('Producto no encontrado en la base de datos')
+            }
+        } catch (error) {
+
+        }
         const newItem = await models.SaleProduct.create(data)
         return newItem
     }
