@@ -1,7 +1,9 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
-const { Op } = require('sequelize');
-const debug = require('debug')('api:sale-service');
+const sequelize = require('../libs/sequelize');
+const debug = require('debug')("api:products-service");
+const { Transaction } = require('sequelize');
+
 
 class SalesService {
     constructor() { }
@@ -16,6 +18,7 @@ class SalesService {
         const newSale = await models.Sale.create(data)
         return newSale
     }
+
     async findOne(id) {
         const sale = await models.Sale.findByPk(id, {
             include: [{
@@ -28,16 +31,20 @@ class SalesService {
     }
 
     async addItem(data) {
-
-    }
-    async getTotalSales() {
-        try {
-            const sales = await models.Sale.findAll({ include: ['items'] });
-            const total = sales.reduce(async (acc, sale) => acc + sale.total, 0);
-            return total;
-        } catch (error) {
-            throw boom.badImplementation('Error al calcular el total de las ventas.');
-        }
+        await sequelize.transaction({
+            isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED
+        }, async (t) => {
+            const { productId, amount } = data;
+            const product = await models.Product.findByPk(productId);
+            if (!product) throw boom.notFound("Producto no encontrado");
+            if ((product.stock - amount) >= 1) {
+                product.stock = product.stock - amount;
+                debug("Sí se puede vender: ", product.stock, "-Nueva existencia");
+                const newItem = await models.SaleProduct.create(data);
+                if (!newItem) throw boom.badImplementation("No se pudo agregar el producto a la venta");
+                return newItem;
+            } // t = sequelize.transaciont({isolation: Transaction.isolation})
+        });
     }
 
     async update(id, changes) {// no se va a poder actualizar una venta

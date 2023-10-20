@@ -58,7 +58,10 @@ router.post('/add-item',
         try {
             const body = req.body
             const newItem = await service.addItem(body)
-            res.status(201).json(newItem)
+            res.status(201).json({
+                message: "Nuevo item agregado a la venta",
+                ...newItem
+            })
         } catch (error) {
             next(error)
         }
