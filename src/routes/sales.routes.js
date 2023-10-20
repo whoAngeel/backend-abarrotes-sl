@@ -16,6 +16,18 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/totales', async (req, res, next) => {
+    try {
+        const total = await service.getTotalSales()
+        res.json({
+            totalVentas: total
+        })
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 router.get('/:id',
     validatorHandler(getSaleSchema, 'params'),
     async (req, res, next) => {
@@ -46,11 +58,15 @@ router.post('/add-item',
         try {
             const body = req.body
             const newItem = await service.addItem(body)
-            res.status(201).json(newItem)
+            res.status(201).json({
+                message: "Nuevo item agregado a la venta",
+                ...newItem
+            })
         } catch (error) {
             next(error)
         }
     })
+
 
 
 module.exports = router

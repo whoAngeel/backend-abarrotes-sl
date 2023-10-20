@@ -3,7 +3,7 @@ const { ValidationError } = require('sequelize');
 const debug = require('debug')("api:errors-middlware");
 
 function logErrors(error, req, res, next) {
-    console.error(error.message)
+    console.error("errorlog", error.message)
     next(error)
 }
 

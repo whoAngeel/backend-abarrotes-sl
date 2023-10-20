@@ -9,7 +9,9 @@ class SalesService {
     constructor() { }
 
     async find() { // TODO: cambiar
-        return await models.Sale.findAll()
+        return await models.Sale.findAll({
+            include: ['items']
+        })
     }
 
     async create(data) {
@@ -55,6 +57,7 @@ class SalesService {
     async delete(id) {// no se va a poder eliminar una venta
         return { id }
     }
+
 }
 
 module.exports = SalesService
