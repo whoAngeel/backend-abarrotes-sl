@@ -1,11 +1,15 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
+const { Op } = require('sequelize');
+const debug = require('debug')('api:sale-service');
 
 class SalesService {
     constructor() { }
 
     async find() { // TODO: cambiar
-        return await models.Sale.findAll()
+        return await models.Sale.findAll({
+            include: ['items']
+        })
     }
 
     async create(data) {
@@ -24,31 +28,16 @@ class SalesService {
     }
 
     async addItem(data) {
-        const { saleId, productId, amount } = data;
+
+    }
+    async getTotalSales() {
         try {
-            const product = await models.Product.findByPk(productId)
-            // buscar producto
-            if (product) {
-                // verificar la disponibilidad
-                if (product.stock >= amount) {
-                    // si hay suficiente stock se resta la cantidad al stock y se guarda
-                    product.stock -= amount
-                    await product.save()
-
-                    // agregar el producto a la venta
-                    const newItem = await models.SaleProduct.create(data)
-                    return newItem
-                } else {
-                    throw boom.badData("Stock insuficiente de este producto")
-                }
-            } else {
-                throw boom.notFound('Producto no encontrado en la base de datos')
-            }
+            const sales = await models.Sale.findAll({ include: ['items'] });
+            const total = sales.reduce(async (acc, sale) => acc + sale.total, 0);
+            return total;
         } catch (error) {
-
+            throw boom.badImplementation('Error al calcular el total de las ventas.');
         }
-        const newItem = await models.SaleProduct.create(data)
-        return newItem
     }
 
     async update(id, changes) {// no se va a poder actualizar una venta
@@ -58,6 +47,7 @@ class SalesService {
     async delete(id) {// no se va a poder eliminar una venta
         return { id }
     }
+
 }
 
 module.exports = SalesService

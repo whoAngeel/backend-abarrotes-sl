@@ -16,6 +16,18 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/totales', async (req, res, next) => {
+    try {
+        const total = await service.getTotalSales()
+        res.json({
+            totalVentas: total
+        })
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 router.get('/:id',
     validatorHandler(getSaleSchema, 'params'),
     async (req, res, next) => {
@@ -51,6 +63,7 @@ router.post('/add-item',
             next(error)
         }
     })
+
 
 
 module.exports = router
