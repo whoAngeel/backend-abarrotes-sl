@@ -29,20 +29,23 @@ class SalesService {
     }
 
     async addItem(data){
-        await sequelize.transaction({
-            isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED
-          }, async (t) => {
+        const t = await sequelize.transaction({ isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED});
+        try {
             const { productId, amount } = data;
-            const product = await models.Product.findByPk(productId);
+            const product = await models.Product.findByPk(productId, {t});
             if (!product) throw boom.notFound("Producto no encontrado");
             if ((product.stock - amount) >= 1) {
                 product.stock = product.stock - amount;
                 debug("Sí se puede vender: ", product.stock, "-Nueva existencia");
                 const newItem = await models.SaleProduct.create(data);
                 if(!newItem) throw boom.badImplementation("No se pudo agregar el producto a la venta");
+                await t.commit();
                 return newItem;
             }
-          });
+        } catch (error) {
+            await t.rollback();
+            throw boom.badImplementation("Error", error)
+        }
     }
 
     async update(id, changes) {// no se va a poder actualizar una venta
