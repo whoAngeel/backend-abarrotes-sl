@@ -38,6 +38,25 @@ class ProductsService {
         }
         return product
     }
+    async findBy(data) { // TODO fix name
+        const {id, name} = data
+        if(id){
+            const product = await models.Product.findByPk(id, {
+                include: ['category', 'provider']
+            })
+            return product
+        }else if(name){
+            const product = await models.Product.findOne({
+                where: {
+                    name
+                },
+                include: ['category', 'provider']
+            })
+            return product
+        }else{
+            throw boom.notFound("Producto no encontrado")
+        }
+    }
     async findAll(query) {
         const options = {
             include: ['category', 'provider']
