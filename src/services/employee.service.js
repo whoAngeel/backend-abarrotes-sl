@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
+const bcrypt = require('bcrypt');
 
 class EmployeesService {
     constructor() { }
@@ -11,17 +12,25 @@ class EmployeesService {
     }
 
     async create(data) {
-        // const newUser = await models.User.create(data.user)
-        // const newEmployee = await models.Employee.create({
-        //     ...data,
-        //     userId: newUser.id
-        // })
-        const newEmployee = await models.Employee.create(data, {
+        const hash = await bcrypt.hash(data.user.password, 10)
+        const newData = {
+            ...data,
+            user: {
+                ...data.user,
+                password: hash
+            }
+        }
+        const newEmployee = await models.Employee.create(newData, {
             include: ['user']
         })
+        const employeeWithoutPassword = newEmployee.toJSON();
+        if (employeeWithoutPassword.user) {
+            delete employeeWithoutPassword.user.password;
+        }
+
         return {
             message: "Empleado y usuario creado correctamente",
-            employee: newEmployee,
+            employee: employeeWithoutPassword,
         }
     }
 
