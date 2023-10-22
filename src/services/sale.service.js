@@ -53,6 +53,8 @@ class SalesService {
         }
     }
 
+    // todo
+
     async update(id, changes) {// no se va a poder actualizar una venta
         return { id, changes }
     }
