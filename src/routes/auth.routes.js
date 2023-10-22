@@ -2,8 +2,11 @@ const { Router } = require('express');
 const Joi = require('joi');
 const passport = require('passport');
 const validatorHandler = require('../middlewares/validator.handler');
+const jwt = require('jsonwebtoken');
+const { config } = require('../config/config');
 
 const router = Router()
+
 
 const loginSchema = Joi.object({
     username: Joi.string().required(),
@@ -17,7 +20,14 @@ router.get('/login', validatorHandler(loginSchema, 'body'),
     async (req, res, next) => {
         try {
             const user = req.user
-            res.json(user)
+            const payload = {
+                sub: user.id,
+                role: user.role,
+            }
+            const token = jwt.sign(payload, config.jwtSecret)
+            res.json({
+                user, token
+            })
         } catch (error) {
             next(error)
         }
