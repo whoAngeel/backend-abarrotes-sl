@@ -3,6 +3,8 @@ const ProductsService = require('../services/product.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { createProductSchema, getProductSchema, updateProductSchema, queryProductSchema } = require('../schemas/product.schema');
 const passport = require('passport');
+const { checkRoles } = require('../middlewares/auth.handler');
+const debug = require('debug')("api:products.router");
 
 const router = express.Router()
 const service = new ProductsService()
@@ -27,10 +29,11 @@ router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res
     }
 })
 
-router.post('/', passport.authenticate('jwt', { session: false }),
+router.post('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
     validatorHandler(createProductSchema, 'body'), async (req, res, next) => {
         try {
-            // const {id} = req.params
             const body = req.body;
             const newProduct = await service.create(body)
             res.status(201).json(newProduct)
