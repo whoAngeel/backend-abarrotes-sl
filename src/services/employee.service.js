@@ -1,14 +1,35 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
 const bcrypt = require('bcrypt');
+const debug = require('debug')('api:employee.service');
 
 class EmployeesService {
     constructor() { }
 
     async findAll() {
-        return await models.Employee.findAll({
+        const employees = await models.Employee.findAll({
             include: ['user']
         })
+
+        const employeesWithoutPassword = employees.map(employee => {
+            if (employee.user) {
+                const employeeJSON = employee.toJSON(); // Convierte el objeto Sequelize a JSON
+                const { user, ...employeeWithoutPassword } = employeeJSON;
+                return {
+                    ...employeeWithoutPassword,
+                    user: {
+                        id: user.id,
+                        username: user.username,
+                        role: user.role,
+                        createdAt: user.createdAt,
+                    }
+                };
+            }
+            return employee;
+        });
+
+        return employeesWithoutPassword;
+
     }
 
     async create(data) {
