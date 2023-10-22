@@ -17,9 +17,13 @@ class UserService {
     async findAll() {
 
         const users = await models.User.findAll({
-            include: ['employee']
+            include: ['employee'],
+            attributes: {
+                exclude: ['password']
+            }
         })
-        delete users.dataValues.password
+
+
         return users
     }
 
