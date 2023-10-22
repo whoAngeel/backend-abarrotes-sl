@@ -30,7 +30,7 @@ class UserService {
         const rta = await models.User.findOne({
             where: {
                 username
-            }
+            },
         })
         return rta
     }

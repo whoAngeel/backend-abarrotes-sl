@@ -5,7 +5,10 @@ const { compare } = require("bcrypt");
 
 const service = new UserService()
 
-const LocalStrategy = new Strategy(async (username, password, done) => {
+const LocalStrategy = new Strategy({
+    usernameField: 'username',
+    passwordField: "password"
+}, async (username, password, done) => {
     try {
         if (username === "" && password === "") done(boom.badData(), false)
         const user = await service.findByUsername(username)
@@ -17,6 +20,7 @@ const LocalStrategy = new Strategy(async (username, password, done) => {
         if (!isMatch) {
             done(boom.unauthorized(), false)
         }
+        delete user.dataValues.password
         done(null, user)
     } catch (error) {
         done(error, false)
