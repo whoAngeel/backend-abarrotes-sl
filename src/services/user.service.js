@@ -23,8 +23,16 @@ class UserService {
             }
         })
 
-
         return users
+    }
+
+    async findByUsername(username) {
+        const rta = await models.User.findOne({
+            where: {
+                username
+            }
+        })
+        return rta
     }
 
     async findOne(id) {
