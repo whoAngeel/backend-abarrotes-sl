@@ -2,4 +2,4 @@ const passport = require("passport");
 const LocalStrategy = require('./strategies/local.strategy')
 
 
-passport.use(localStorage)
+passport.use(LocalStrategy)

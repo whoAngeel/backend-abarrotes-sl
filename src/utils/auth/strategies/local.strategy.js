@@ -7,6 +7,7 @@ const service = new UserService()
 
 const LocalStrategy = new Strategy(async (username, password, done) => {
     try {
+        if (username === "" && password === "") done(boom.badData(), false)
         const user = await service.findByUsername(username)
         if (!user) {
             done(boom.unauthorized(), false)

@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use("/api/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerSpec))) // endpoint  para mostrar la documentacion
 
+require('./utils/auth'); // usar las strategias de passport
 // ROUTES
 app.get('/', (req, res) => {
     res.send("Servidor");
