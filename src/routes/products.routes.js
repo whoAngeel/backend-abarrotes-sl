@@ -2,6 +2,7 @@ const express = require('express');
 const ProductsService = require('../services/product.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { createProductSchema, getProductSchema, updateProductSchema, queryProductSchema } = require('../schemas/product.schema');
+const passport = require('passport');
 
 const router = express.Router()
 const service = new ProductsService()
@@ -26,16 +27,17 @@ router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res
     }
 })
 
-router.post('/', validatorHandler(createProductSchema, 'body'), async (req, res, next) => {
-    try {
-        // const {id} = req.params
-        const body = req.body;
-        const newProduct = await service.create(body)
-        res.status(201).json(newProduct)
-    } catch (error) {
-        next(error)
-    }
-})
+router.post('/', passport.authenticate('jwt', { session: false }),
+    validatorHandler(createProductSchema, 'body'), async (req, res, next) => {
+        try {
+            // const {id} = req.params
+            const body = req.body;
+            const newProduct = await service.create(body)
+            res.status(201).json(newProduct)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 router.patch('/:id', validatorHandler(getProductSchema, 'params'), validatorHandler(updateProductSchema, 'body'), async (req, res, next) => {
     try {
