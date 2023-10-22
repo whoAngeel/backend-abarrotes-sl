@@ -9,6 +9,7 @@ const swaggerSpec = require('./swaggerSpec');
 
 const routerApi = require('./routes')
 const { errorHandler, logErrors, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
+const { checkApiKey } = require('./middlewares/auth.handler');
 
 const app = express()
 
@@ -22,6 +23,10 @@ app.use("/api/doc", swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerSpec)))
 // ROUTES
 app.get('/', (req, res) => {
     res.send("Servidor");
+})
+
+app.get('/check-api', checkApiKey, (req, res) => { // TODO. quitar esto
+    res.send('Hola, estas autorizado')
 })
 routerApi(app)
 
