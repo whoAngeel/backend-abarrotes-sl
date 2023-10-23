@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
-const { query } = require('express');
+const { Op } = require('sequelize');
 
 class ProductsService {
 
@@ -36,6 +36,31 @@ class ProductsService {
             throw boom.notFound("Producto no encontrado")
         }
         return product
+    }
+    async findBy(data) {
+        if ('id' in data) {
+            // Buscar por id
+            const product = await models.Product.findByPk(data.id, {
+                include: ['category', 'provider']
+            });
+            if (!product) {
+                throw boom.notFound("Producto no encontrado");
+            }
+            return product;
+        } else if ('name' in data) {
+            // Buscar por nombre
+            const products = await models.Product.findAll({
+                where: {
+                    name: {
+                        [Op.like]: `%${data.name}%`
+                    }
+                },
+                include: ['category', 'provider']
+            });
+            return products;
+        } else {
+            throw boom.badRequest("Debe proporcionar un id o un nombre para buscar el producto");
+        }
     }
     async findAll(query) {
         const options = {

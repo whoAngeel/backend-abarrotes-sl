@@ -38,11 +38,14 @@ class SalesService {
             if (!product) throw boom.notFound("Producto no encontrado");
             if ((product.stock - amount) >= 1) {
                 product.stock = product.stock - amount;
-                debug("Sí se puede vender: ", product.stock, "-Nueva existencia");
+                debug("Sí se puede vender: ", product.stock, " <-Nueva existencia");
+                await product.save();
                 const newItem = await models.SaleProduct.create(data);
                 if(!newItem) throw boom.badImplementation("No se pudo agregar el producto a la venta");
                 await t.commit();
                 return newItem;
+            }else{
+                throw boom.badRequest("No hay suficiente stock para realizar la venta");
             }
         } catch (error) {
             await t.rollback();

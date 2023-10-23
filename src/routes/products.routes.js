@@ -21,15 +21,13 @@ router.get('/',
         }
     })
 
-router.get('/:id',
+router.get('/search',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin', 'employee'),
-    validatorHandler(getProductSchema, 'params'),
-    async (req, res, next) => {
+    validatorHandler(getProductSchema, 'body'), async (req, res, next) => {
         try {
-            const id = req.params.id
-            const product = await service.findOne(id)
-            res.json(product)
+            const product = await service.findBy(req.body);
+            res.status(200).json(product)
         } catch (error) {
             next(error)
         }
