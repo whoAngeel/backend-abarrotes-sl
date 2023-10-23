@@ -21,9 +21,8 @@ router.get('/', validatorHandler(queryProductSchema, 'query'), async (req, res, 
 router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
     try {
         const id = req.params.id
-        res.json({
-            message: 'endpoint para obtener un producto por id: ' + id
-        })
+        const product = await service.findOne(id)
+        res.json(product)
     } catch (error) {
         next(error)
     }
@@ -42,24 +41,33 @@ router.post('/',
         }
     })
 
-router.patch('/:id', validatorHandler(getProductSchema, 'params'), validatorHandler(updateProductSchema, 'body'), async (req, res, next) => {
-    try {
-        res.json({
-            message: 'ruta para editar un producto'
-        })
-    } catch (error) {
-        next(error)
-    }
-})
+router.patch('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
+    validatorHandler(getProductSchema, 'params'),
+    validatorHandler(updateProductSchema, 'body'),
+    async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const body = req.body
+            const updatedProduct = await service.update(id, body)
+            res.json(updatedProduct)
+        } catch (error) {
+            next(error)
+        }
+    })
 
-router.delete('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
-    try {
-        res.json({
-            message: "eliminar producto"
-        })
-    } catch (error) {
-        next(error)
-    }
-})
+router.delete('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
+    validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const rta = await service.delete(id)
+            res.json(rta)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 module.exports = router

@@ -17,14 +17,13 @@ class ProductsService {
     }
 
     async update(id, changes) {
-        // if(!product)
         const product = this.findOne(id)
-        const newProd = await product.update(changes)
+        const newProd = (await product).update(changes)
         return newProd
     }
     async delete(id) {
         const producto = this.findOne(id)
-        await producto.destroy();
+            (await producto).destroy();
         return {
             message: "Producto eliminado"
         }
