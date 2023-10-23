@@ -7,17 +7,21 @@ const { createSaleSchema,
 const router = Router()
 const service = new SaleService()
 
-router.get('/', async (req, res, next) => {
-    try {
-        const sales = await service.find()
-        res.json(sales)
-    } catch (error) {
-        next(error)
-    }
-})
+router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
+    async (req, res, next) => {
+        try {
+            const sales = await service.find()
+            res.json(sales)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 router.get('/totales', async (req, res, next) => {
     try {
+        // TODO: CALCULAR LOS TOTALES DE LAS VENTAS
         const total = await service.getTotalSales()
         res.json({
             totalVentas: total
@@ -29,6 +33,8 @@ router.get('/totales', async (req, res, next) => {
 
 
 router.get('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
     validatorHandler(getSaleSchema, 'params'),
     async (req, res, next) => {
         try {
@@ -41,6 +47,8 @@ router.get('/:id',
     })
 
 router.post('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
     validatorHandler(createSaleSchema, 'body'),
     async (req, res, next) => {
         try {
@@ -54,6 +62,8 @@ router.post('/',
     })
 
 router.post('/add-item',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
     validatorHandler(addItemSchema, 'body'), async (req, res, next) => {
         try {
             const body = req.body

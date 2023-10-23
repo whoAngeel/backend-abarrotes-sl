@@ -6,16 +6,21 @@ const { createProviderSchema, getProviderSchema, updateProviderSchema } = requir
 const router = Router()
 const service = new ProvidersServices()
 
-router.get('/', async (req, res, next) => {
-    try {
-        const providers = await service.findAll();
-        res.json(providers)
-    } catch (error) {
-        next(error)
-    }
-})
+router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
+    async (req, res, next) => {
+        try {
+            const providers = await service.findAll();
+            res.json(providers)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 router.get('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
     validatorHandler(getProviderSchema, 'params'),
     async (req, res, next) => {
         try {
@@ -28,6 +33,8 @@ router.get('/:id',
     })
 
 router.post('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
     validatorHandler(createProviderSchema, 'body'),
     async (req, res, next) => {
         try {
@@ -40,6 +47,8 @@ router.post('/',
     })
 
 router.patch('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
     validatorHandler(getProviderSchema, 'params'),
     validatorHandler(updateProviderSchema, 'body'), async (req, res, next) => {
         try {
@@ -53,6 +62,8 @@ router.patch('/:id',
     })
 
 router.delete('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
     validatorHandler(getProviderSchema, 'params'), async (req, res, next) => {
         try {
             const { id } = req.params

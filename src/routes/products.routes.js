@@ -9,24 +9,31 @@ const debug = require('debug')("api:products.router");
 const router = express.Router()
 const service = new ProductsService()
 
-router.get('/', validatorHandler(queryProductSchema, 'query'), async (req, res, next) => {
-    try {
-        const products = await service.findAll(req.query);
-        res.json(products)
-    } catch (error) {
-        next(error)
-    }
-})
+router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
+    validatorHandler(queryProductSchema, 'query'), async (req, res, next) => {
+        try {
+            const products = await service.findAll(req.query);
+            res.json(products)
+        } catch (error) {
+            next(error)
+        }
+    })
 
-router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
-    try {
-        const id = req.params.id
-        const product = await service.findOne(id)
-        res.json(product)
-    } catch (error) {
-        next(error)
-    }
-})
+router.get('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
+    validatorHandler(getProductSchema, 'params'),
+    async (req, res, next) => {
+        try {
+            const id = req.params.id
+            const product = await service.findOne(id)
+            res.json(product)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 router.post('/',
     passport.authenticate('jwt', { session: false }),
