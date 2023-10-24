@@ -41,7 +41,6 @@ const updateProductSchema = joi.object({
     imgUrl,
     stock,
     brand,
-    measureUnit,
     providerId,
     categoryId,
 });

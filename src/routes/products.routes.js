@@ -27,6 +27,14 @@ router.get('/search', validatorHandler(getProductSchema, 'body'), async (req, re
     }
 })
 
+router.get('/edit', validatorHandler(updateProductSchema, 'body'), async (req, res, next) => {
+    try {
+        res.status(200).json({"message": "ruta para editar un producto"})
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.post('/',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
