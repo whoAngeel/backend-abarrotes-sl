@@ -26,9 +26,6 @@ app.get('/', (req, res) => {
     res.send("Servidor");
 })
 
-app.get('/check-api', checkApiKey, (req, res) => { // TODO. quitar esto
-    res.send('Hola, estas autorizado')
-})
 routerApi(app)
 
 // middlewares de errores

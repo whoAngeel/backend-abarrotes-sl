@@ -9,23 +9,29 @@ const debug = require('debug')("api:products.router");
 const router = express.Router()
 const service = new ProductsService()
 
-router.get('/', validatorHandler(queryProductSchema, 'query'), async (req, res, next) => {
-    try {
-        const products = await service.findAll(req.query);
-        res.json(products)
-    } catch (error) {
-        next(error)
-    }
-})
+router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
+    validatorHandler(queryProductSchema, 'query'), async (req, res, next) => {
+        try {
+            const products = await service.findAll(req.query);
+            res.json(products)
+        } catch (error) {
+            next(error)
+        }
+    })
 
-router.get('/search', validatorHandler(getProductSchema, 'body'), async (req, res, next) => {
-    try {
-        const product = await service.findBy(req.body);
-        res.status(200).json(product)
-    } catch (error) {
-        next(error)
-    }
-})
+router.get('/search',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin', 'employee'),
+    validatorHandler(getProductSchema, 'body'), async (req, res, next) => {
+        try {
+            const product = await service.findBy(req.body);
+            res.status(200).json(product)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 router.get('/edit', validatorHandler(updateProductSchema, 'body'), async (req, res, next) => {
     try {
@@ -48,24 +54,33 @@ router.post('/',
         }
     })
 
-router.patch('/:id', validatorHandler(getProductSchema, 'params'), validatorHandler(updateProductSchema, 'body'), async (req, res, next) => {
-    try {
-        res.json({
-            message: 'ruta para editar un producto'
-        })
-    } catch (error) {
-        next(error)
-    }
-})
+router.patch('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
+    validatorHandler(getProductSchema, 'params'),
+    validatorHandler(updateProductSchema, 'body'),
+    async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const body = req.body
+            const updatedProduct = await service.update(id, body)
+            res.json(updatedProduct)
+        } catch (error) {
+            next(error)
+        }
+    })
 
-router.delete('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
-    try {
-        res.json({
-            message: "eliminar producto"
-        })
-    } catch (error) {
-        next(error)
-    }
-})
+router.delete('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
+    validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const rta = await service.delete(id)
+            res.json(rta)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 module.exports = router
