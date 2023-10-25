@@ -22,7 +22,9 @@ router.get('/',
         }
     })
 
-router.get('/edit', validatorHandler(updateStockProductSchema, 'body'), async (req, res, next) => {
+router.patch('/edit',
+    passport.authenticate('jwt', { session: false }),
+    validatorHandler(updateStockProductSchema, 'body'), async (req, res, next) => {
     try {
         const product = await service.update(req.body);
         res.status(200).json(product)
