@@ -15,7 +15,7 @@ const loginSchema = Joi.object({
 
 router.get('/login', validatorHandler(loginSchema, 'body'),
     passport.authenticate('local', {
-        session: false
+       session: false
     }),
     async (req, res, next) => {
         try {

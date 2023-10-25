@@ -3,7 +3,8 @@ const { Router } = require('express');
 const SaleService = require('../services/sale.service');
 const { createSaleSchema,
     getSaleSchema, addItemSchema } = require('../schemas/sale.schema');
-
+const passport = require('passport');
+const { checkRoles } = require('../middlewares/auth.handler');
 const router = Router()
 const service = new SaleService()
 

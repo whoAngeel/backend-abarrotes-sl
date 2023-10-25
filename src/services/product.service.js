@@ -47,6 +47,15 @@ class ProductsService {
                 throw boom.notFound("Producto no encontrado");
             }
             return product;
+        }else if('barCode' in data){
+            // Buscar por codigo de barras
+            const products = await models.Product.findAll({
+                where: {
+                    barCode: data.barCode
+                },
+                include: ['category', 'provider']
+            });
+            return products;
         } else if ('name' in data) {
             // Buscar por nombre
             const products = await models.Product.findAll({
