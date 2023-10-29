@@ -12,14 +12,8 @@ const loginSchema = Joi.object({
     username: Joi.string().required(),
     password: Joi.string().required()
 })
-/**
- * @openapi
- * /api/auth/login
- *      get:
- *          tags:
- *              -
- * */
-router.get('/login', validatorHandler(loginSchema, 'body'),
+
+router.post('/login', validatorHandler(loginSchema, 'body'),
     passport.authenticate('local', {
         session: false
     }),

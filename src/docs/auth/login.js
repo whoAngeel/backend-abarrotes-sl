@@ -1,5 +1,5 @@
 module.exports = {
-    get: {
+    "post": {
         "tags": ["Autenticación"],
         "summary": "Iniciar sesión",
         "description": "Iniciar sesión de usuario y obtener un token de acceso.",

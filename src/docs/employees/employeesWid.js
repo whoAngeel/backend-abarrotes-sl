@@ -104,7 +104,10 @@ module.exports = {
                 "name": "id",
                 "in": "path",
                 "required": true,
-                "schema": { "type": "integer" },
+                "schema": {
+                    "type": "integer",
+                    example: 2
+                },
                 "description": "ID del empleado a actualizar."
             }
         ],
@@ -169,7 +172,10 @@ module.exports = {
                 "name": "id",
                 "in": "path",
                 "required": true,
-                "schema": { "type": "integer" },
+                "schema": {
+                    "type": "integer",
+                    example: 2
+                },
                 "description": "ID del empleado a eliminar."
             }
         ],
