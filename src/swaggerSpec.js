@@ -11,11 +11,20 @@ const options = {
             title: "API Rest para la tienda de abarrotes sanluis",
             version: "1.0.0"
         },
-        // servers: [
-        //     {
-        //         url: "http://localhost:3000"
-        //     }
-        // ]
+        servers: [
+            {
+                url: "http://localhost:3000/api/auth",
+            },
+            {
+                url: "http://localhost:3000/api/users",
+            },
+            {
+                url: "http://localhost:3000/api/categories",
+            },
+            {
+                url: "http://localhost:3000/api/providers",
+            },
+        ]
     },
     apis: [`src/routes/index.js`,
         'src/routes/auth.routes.js',
