@@ -1,7 +1,7 @@
 module.exports = {
     tags: [
         {
-            name: "operaciones del backend de la tienda "
+            name: "Operaciones del backend de la tienda "
         }
     ]
 }
