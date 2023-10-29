@@ -18,6 +18,12 @@ module.exports = {
         },
         '/users/{userId}': {
             ...require('./users/usersId')
+        },
+        '/employees/': {
+            ...require('./employees/employees')
+        },
+        '/employees/{employeeId}/': {
+            ...require('./employees/employeesWid')
         }
 
     }

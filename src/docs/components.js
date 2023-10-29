@@ -1,10 +1,10 @@
 module.exports = {
     components: {
-        schemas: {
-            id: {
-                type: 'number',
-                description: 'An id of a >>>>',
-                example: '2'
+        securitySchemes: {
+            bearerAuth: {
+                type: http,
+                scheme: bearer,
+                bearerFormat: JWT
             }
         }
     }
