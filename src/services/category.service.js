@@ -22,7 +22,11 @@ class CategoriesService {
             options.offset = offset
         }
         const categories = await models.Category.findAll(options)
-        return categories;
+        const totalCategories = await models.Category.count()
+        return {
+            categories,
+            totalCategories
+        };
     }
 
     async findOne(id) {
