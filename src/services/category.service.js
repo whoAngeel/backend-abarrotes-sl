@@ -12,8 +12,16 @@ class CategoriesService {
         return newCat
     }
 
-    async findAll() {
-        const categories = await models.Category.findAll()
+    async findAll(query) {
+        const options = {
+
+        }
+        const { limit, offset } = query
+        if (limit && offset) {
+            options.limit = limit;
+            options.offset = offset
+        }
+        const categories = await models.Category.findAll(options)
         return categories;
     }
 

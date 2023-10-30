@@ -13,7 +13,7 @@ router.get('/',
     checkRoles('admin', 'employee'),
     async (req, res, next) => {
         try {
-            const categories = await service.findAll()
+            const categories = await service.findAll(req.query)
             res.status(200).json(categories)
 
         } catch (error) {
