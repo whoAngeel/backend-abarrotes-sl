@@ -5,8 +5,10 @@ const validatorHandler = require('../middlewares/validator.handler');
 const jwt = require('jsonwebtoken');
 const { config } = require('../config/config');
 
-const router = Router()
+const UsersService = require('../services/user.service');
 
+const router = Router()
+const service = new UsersService()
 
 const loginSchema = Joi.object({
     username: Joi.string().required(),
@@ -33,5 +35,16 @@ router.post('/login', validatorHandler(loginSchema, 'body'),
         }
     })
 
+router.get('/profile-user', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
+        const user = req.user
+        const id = user.sub
+        const info = await service.findOne(id)
+        delete info.dataValues.password
+        res.json(info)
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router
