@@ -12,7 +12,7 @@ const service = new InventoryService()
 
 router.get('/',
     passport.authenticate('jwt', { session: false }),
-    checkRoles('admin', 'employee'),
+    checkRoles('admin'),
     validatorHandler(queryProductSchema, 'body'), async (req, res, next) => {
         try {
             const products = await service.findAll(req.query);
@@ -24,6 +24,7 @@ router.get('/',
 
 router.patch('/edit',
     passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
     validatorHandler(updateStockProductSchema, 'body'), async (req, res, next) => {
     try {
         const product = await service.update(req.body);

@@ -5,6 +5,19 @@ class InventoryService {
 
     constructor() {}
 
+    async findAll(query) {
+        const options = {
+            include: ['category', 'provider']
+        }
+        const { limit, offset } = query
+        if (limit && offset) {
+            options.limit = limit;
+            options.offset = offset
+        }
+        const products = await models.Product.findAll(options)
+        return products
+    }
+
     async findBy(data) {
         if ('id' in data) {
             // Buscar por id
