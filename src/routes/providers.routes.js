@@ -4,6 +4,7 @@ const ProvidersServices = require('../services/provider.service');
 const { createProviderSchema, getProviderSchema, updateProviderSchema } = require('../schemas/provider.schema');
 const passport = require('passport');
 const { checkRoles } = require('../middlewares/auth.handler');
+
 const router = Router()
 const service = new ProvidersServices()
 
