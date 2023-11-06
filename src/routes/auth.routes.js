@@ -52,7 +52,7 @@ router.get('/profile-user', passport.authenticate('jwt', { session: false }), as
 
 
 /// este endpoint solo se ocupa para crear tu usuario administrador la primera vez que usas la api
-router.get('/create-user', validatorHandler(createEmployeeSchema, 'body'), async (req, res, next) => {
+router.post('/create-user', validatorHandler(createEmployeeSchema, 'body'), async (req, res, next) => {
     try {
         const data = req.body
         const dataAdmin = {
