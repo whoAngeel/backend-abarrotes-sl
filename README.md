@@ -37,19 +37,19 @@ Antes de iniciar debes tener [Git](https://git-scm.com), [Docker](https://www.do
 ## :checkered_flag: Instalación
 
 ```bash
-# Clone this project
+# clonar este proyecto
 $ git clone https://github.com/whoAngeel/backend-abarrotes-sl.git
 
-# Access
+# dirigirse a la ruta del backend
 $ cd backend-abarrotes-sl
 
-# Install dependencies
+# instalar las dependencias
 $ npm i
 
-# Install postgres with docker
+# levantar la base de datos de docker
 $ docker-compose up -d postgres
 
-# Run the project
+# Ejecutar este proyecto
 $ npm run dev
 
 # The server will initialize in the <http://localhost:3000>
