@@ -6,9 +6,12 @@ const jwt = require('jsonwebtoken');
 const { config } = require('../config/config');
 
 const UsersService = require('../services/user.service');
+const { createEmployeeSchema } = require('../schemas/employee.schema');
+const EmployeesService = require('../services/employee.service');
 
 const router = Router()
 const service = new UsersService()
+const empService = new EmployeesService()
 
 const loginSchema = Joi.object({
     username: Joi.string().required(),
@@ -42,6 +45,29 @@ router.get('/profile-user', passport.authenticate('jwt', { session: false }), as
         const info = await service.findOne(id)
         delete info.dataValues.password
         res.json(info)
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+/// este endpoint solo se ocupa para crear tu usuario administrador la primera vez que usas la api
+router.get('/create-user', validatorHandler(createEmployeeSchema, 'body'), async (req, res, next) => {
+    try {
+        const data = req.body
+        const dataAdmin = {
+            ...data,
+            user: {
+                ...user,
+                role: "admin"
+            }
+        }
+        const newUser = await empService.create(dataAdmin)
+        res.status(201).json({
+            message: "Usuario administrador creado",
+            newUser
+        })
+        // crear el empleado con su usuario
     } catch (error) {
         next(error)
     }
