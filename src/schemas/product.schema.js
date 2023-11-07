@@ -33,6 +33,7 @@ const createProductSchema = joi.object({
 });
 
 const updateProductSchema = joi.object({
+    id: id.required(),
     name,
     purchasePrice,
     salePrice,
@@ -41,7 +42,6 @@ const updateProductSchema = joi.object({
     imgUrl,
     stock,
     brand,
-    measureUnit,
     providerId,
     categoryId,
 });
@@ -54,7 +54,11 @@ const searchByNameSchema = joi.object({
     name: name.required()
 });
 
-const getProductSchema = joi.alternatives().try(searchByIdSchema, searchByNameSchema);
+const searchByBarCode = joi.object({
+    barCode: barCode.required()
+});
+
+const getProductSchema = joi.alternatives().try(searchByIdSchema, searchByNameSchema, searchByBarCode);
 
 const queryProductSchema = joi.object({
     offset,

@@ -32,7 +32,7 @@ router.get('/search',
             next(error)
         }
     })
-
+    
 router.post('/',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
