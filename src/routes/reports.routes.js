@@ -1,17 +1,32 @@
 const { Router } = require("express");
 const validatorHandler = require('../middlewares/validator.handler');
-const { queryReportSchema } = require('../schemas/reports.schema');
+const { queryReportMonthSchema, queryReportDaySchema } = require('../schemas/reports.schema');
 const { checkRoles } = require("../middlewares/auth.handler");
 const passport = require("passport");
+const ReportService = require('../services/reports.service');
 
 const router = Router()
+const service = new ReportService()
 
-router.get('/',
+router.get('/month',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
-    validatorHandler(queryReportSchema, 'body'), async (req, res, next) => {
+    validatorHandler(queryReportMonthSchema, 'body'), async (req, res, next) => {
     try {
-        res.status(201).json("Oa")
+        const sales = await service.perMonth(req.body);
+        res.status(200).json(sales)
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/day',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
+    validatorHandler(queryReportDaySchema, 'body'), async (req, res, next) => {
+    try {
+        const sales = await service.perDay(req.body);
+        res.status(200).json(sales)
     } catch (error) {
         next(error)
     }

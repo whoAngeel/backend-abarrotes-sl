@@ -1,14 +1,18 @@
 const joi = require('joi');
+const month = joi.string().max(255)
+const year = joi.string().max(255)
+const day = joi.string().max(255)
 
-const limit = joi.number().integer();
-const offset = joi.number().integer();
-const createdAt = joi.string().isoDate();
-
-const queryReportSchema = joi.object({
-    offset,
-    limit,
+const queryReportMonthSchema = joi.object({
+    month: month.required(),
+    year: year.required()
+});
+const queryReportDaySchema = joi.object({
+    month: month.required(),
+    year: year.required(),
+    day: day.required()
 });
 
 module.exports = {
-    queryReportSchema
+    queryReportDaySchema, queryReportMonthSchema
 };

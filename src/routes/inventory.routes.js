@@ -5,7 +5,6 @@ const { queryProductSchema } = require('../schemas/product.schema');
 const { updateStockProductSchema } = require('../schemas/inventory.schema');
 const passport = require('passport');
 const { checkRoles } = require('../middlewares/auth.handler');
-const debug = require('debug')("api:products.router");
 
 const router = express.Router()
 const service = new InventoryService()
