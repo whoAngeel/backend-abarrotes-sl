@@ -16,6 +16,7 @@ class SalesService {
 
     async create(data) {
         const newSale = await models.Sale.create(data)
+        console.log(newSale.dataValues);
         return newSale
     }
 
@@ -30,21 +31,21 @@ class SalesService {
         return sale
     }
 
-    async addItem(data){
-        const t = await sequelize.transaction({ isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED});
+    async addItem(data) {
+        const t = await sequelize.transaction({ isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED });
         try {
             const { productId, amount } = data;
-            const product = await models.Product.findByPk(productId, {t});
+            const product = await models.Product.findByPk(productId, { t });
             if (!product) throw boom.notFound("Producto no encontrado");
             if ((product.stock - amount) >= 1) {
                 product.stock = product.stock - amount;
                 debug("Sí se puede vender: ", product.stock, " <-Nueva existencia");
                 await product.save();
                 const newItem = await models.SaleProduct.create(data);
-                if(!newItem) throw boom.badImplementation("No se pudo agregar el producto a la venta");
+                if (!newItem) throw boom.badImplementation("No se pudo agregar el producto a la venta");
                 await t.commit();
                 return newItem;
-            }else{
+            } else {
                 throw boom.badRequest("No hay suficiente stock para realizar la venta");
             }
         } catch (error) {

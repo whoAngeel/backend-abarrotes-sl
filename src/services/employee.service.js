@@ -11,11 +11,9 @@ class EmployeesService {
             include: ['user']
         })
 
-        const employeesWithoutAdminUser = employees.filter(employee => {
-            return !employee.user || (employee.user.role !== 'admin');
-        });
 
-        const employeesWithoutPassword = employeesWithoutAdminUser.map(employee => {
+
+        const employeesWithoutPassword = employees.map(employee => {
             if (employee.user) {
                 const employeeJSON = employee.toJSON(); // Convierte el objeto Sequelize a JSON
                 const { user, ...employeeWithoutPassword } = employeeJSON;
