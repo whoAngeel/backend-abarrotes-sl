@@ -10,10 +10,13 @@ class ProductsService {
 
     async create(data) {
         const newProduct = await models.Product.create(data, {
-            include: ['category', 'provider'],
-
+            include: ['category', 'provider']
         })
-        return newProduct
+        console.log(newProduct.dataValues.id);
+        const product = await models.Product.findByPk(newProduct.dataValues.id, {
+            include: ['category', 'provider']
+        });
+        return product
     }
 
     async update(id, changes) {
@@ -22,9 +25,10 @@ class ProductsService {
         return newProd
     }
     async delete(id) {
-        const producto = this.findOne(id)
-            (await producto).destroy();
+        const producto = this.findOne(id);
+        (await producto).destroy();
         return {
+            id,
             message: "Producto eliminado"
         }
     }
@@ -47,7 +51,7 @@ class ProductsService {
                 throw boom.notFound("Producto no encontrado");
             }
             return product;
-        }else if('barCode' in data){
+        } else if ('barCode' in data) {
             // Buscar por codigo de barras
             const products = await models.Product.findAll({
                 where: {

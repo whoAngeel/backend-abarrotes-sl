@@ -1,7 +1,7 @@
 const express = require('express');
 const ProductsService = require('../services/product.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { createProductSchema, getProductSchema, updateProductSchema, queryProductSchema } = require('../schemas/product.schema');
+const { createProductSchema, getProductSchema, updateProductSchema, queryProductSchema, getProdSchema } = require('../schemas/product.schema');
 const passport = require('passport');
 const { checkRoles } = require('../middlewares/auth.handler');
 const debug = require('debug')("api:products.router");
@@ -32,7 +32,7 @@ router.get('/search',
             next(error)
         }
     })
-    
+
 router.post('/',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
@@ -49,7 +49,7 @@ router.post('/',
 router.patch('/:id',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
-    validatorHandler(getProductSchema, 'params'),
+    validatorHandler(getProdSchema, 'params'),
     validatorHandler(updateProductSchema, 'body'),
     async (req, res, next) => {
         try {
@@ -69,6 +69,19 @@ router.delete('/:id',
         try {
             const { id } = req.params
             const rta = await service.delete(id)
+            res.json(rta)
+        } catch (error) {
+            next(error)
+        }
+    })
+
+router.get('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
+    validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const rta = await service.findOne(id)
             res.json(rta)
         } catch (error) {
             next(error)
