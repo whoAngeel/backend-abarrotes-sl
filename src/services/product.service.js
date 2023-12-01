@@ -65,7 +65,7 @@ class ProductsService {
             const products = await models.Product.findAll({
                 where: {
                     name: {
-                        [Op.like]: `%${data.name}%`
+                        [Op.iLike]: `%${data.name}%`
                     }
                 },
                 include: ['category', 'provider']
