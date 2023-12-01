@@ -35,7 +35,7 @@ const updateEmployeeSchema = joi.object({
     phone,
     email,
     salary,
-    userId
+
 })
 
 const getEmployeeSchema = joi.object({

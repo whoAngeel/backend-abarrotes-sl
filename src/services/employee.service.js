@@ -11,7 +11,11 @@ class EmployeesService {
             include: ['user']
         })
 
-        const employeesWithoutPassword = employees.map(employee => {
+        const employeesWithoutAdminUser = employees.filter(employee => {
+            return !employee.user || (employee.user.role !== 'admin');
+        });
+
+        const employeesWithoutPassword = employeesWithoutAdminUser.map(employee => {
             if (employee.user) {
                 const employeeJSON = employee.toJSON(); // Convierte el objeto Sequelize a JSON
                 const { user, ...employeeWithoutPassword } = employeeJSON;
@@ -68,13 +72,14 @@ class EmployeesService {
         const newEmployee = (await employee).update(changes)
         return {
             message: "Empleado Acutalizado",
-            id: newEmployee.id
+            employee: newEmployee
         }
     }
 
     async delete(id) {
         const employee = this.findOne(id);
         (await employee).destroy()
+
         return {
             message: "Empleado eliminado",
             id: employee.id
