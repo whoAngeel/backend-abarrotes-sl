@@ -4,6 +4,7 @@ const validatorHandler = require('../middlewares/validator.handler');
 const { createProductSchema, getProductSchema, updateProductSchema, queryProductSchema, getProdSchema } = require('../schemas/product.schema');
 const passport = require('passport');
 const { checkRoles } = require('../middlewares/auth.handler');
+const Joi = require('joi');
 const debug = require('debug')("api:products.router");
 
 const router = express.Router()
@@ -21,7 +22,7 @@ router.get('/',
         }
     })
 
-router.get('/search',
+router.post('/search',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin', 'employee'),
     validatorHandler(getProductSchema, 'body'), async (req, res, next) => {
@@ -83,6 +84,18 @@ router.get('/:id',
             const { id } = req.params
             const rta = await service.findOne(id)
             res.json(rta)
+        } catch (error) {
+            next(error)
+        }
+    })
+
+router.get("/buscar", passport.authenticate('jwt', { session: false }),
+    checkRoles('admin'),
+    validatorHandler(Joi.object({ name: Joi.string() }), 'body'), async (req, res, next) => {
+        try {
+            const { name } = req.body
+            const rta = await service.searchByName(name)
+            return rta
         } catch (error) {
             next(error)
         }

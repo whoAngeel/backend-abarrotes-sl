@@ -42,6 +42,7 @@ class ProductsService {
         return product
     }
     async findBy(data) {
+        console.log(data)
         if ('id' in data) {
             // Buscar por id
             const product = await models.Product.findByPk(data.id, {
@@ -74,6 +75,18 @@ class ProductsService {
         } else {
             throw boom.badRequest("Debe proporcionar un id o un nombre para buscar el producto");
         }
+    }
+    async searchByName(name) {
+        const products = await models.Product.findAll({
+            where: {
+                name: {
+                    [Op.iLike]: `%${name}%`
+                }
+            },
+            include: ['category', 'provider']
+        });
+        if (!products) throw boom.badRequest()
+        return products;
     }
     async findAll(query) {
         const options = {
