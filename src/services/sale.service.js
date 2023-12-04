@@ -2,16 +2,18 @@ const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
 const sequelize = require('../libs/sequelize');
 const debug = require('debug')("api:products-service");
-const { Transaction } = require('sequelize');
+const { Transaction, Op } = require('sequelize');
 
 
 class SalesService {
     constructor() { }
 
     async find() { // TODO: cambiar
-        return await models.Sale.findAll({
-            include: ['items']
+        const sales = await models.Sale.findAll({
+            include: ['items', 'employee'],
         })
+
+        return sales.filter(sale => sale.items.length >= 1)
     }
 
     async create(data) {

@@ -50,7 +50,7 @@ const searchByIdSchema = joi.object({
 });
 
 const searchByNameSchema = joi.object({
-    name: name.required()
+    name: joi.string().required()
 });
 
 const searchByBarCode = joi.object({
@@ -59,12 +59,16 @@ const searchByBarCode = joi.object({
 
 const getProductSchema = joi.alternatives().try(searchByIdSchema, searchByNameSchema, searchByBarCode);
 
+const getProdSchema = joi.object({
+    id: id.required()
+})
 const queryProductSchema = joi.object({
     offset,
     limit,
 });
 
 module.exports = {
+    getProdSchema,
     createProductSchema,
     updateProductSchema,
     getProductSchema,
