@@ -3,10 +3,10 @@ const { models } = require('../libs/sequelize');
 const { Op } = require('sequelize');
 const debug = require('debug')("api:products-service");
 
-class ReportService{
-    constructor(){}
+class ReportService {
+    constructor() { }
 
-    async perMonth(query){
+    async perMonth(query) {
         const { year, month } = query;
         const stringDate = `${year}-${month}-`
         const date = new Date(stringDate)
@@ -20,7 +20,7 @@ class ReportService{
                         [Op.lt]: new Date(date.setMonth(date.getMonth() + 1)).toISOString()
                     }
                 },
-                include: ['items']
+                include: ['items', 'employee']
             });
 
             return sales;
@@ -29,7 +29,7 @@ class ReportService{
         }
     }
 
-    async porDia(query){
+    async porDia(query) {
         const { year, month, day } = query;
         const stringDate = `${year}-${month}-${day}`
         const date = new Date(stringDate)
@@ -43,7 +43,7 @@ class ReportService{
                         [Op.lt]: new Date(date.setMonth(date.getMonth() + 1)).toISOString()
                     }
                 },
-                include: ['items']
+                include: ['items', 'employee']
             });
 
             return sales;
@@ -52,7 +52,7 @@ class ReportService{
         }
     }
 
-    async perDay(query){
+    async perDay(query) {
         const { year, month, day } = query;
         const stringDate = `${year}-${month}-${day}`;
         const date = new Date(stringDate);
@@ -66,7 +66,7 @@ class ReportService{
                         [Op.lt]: new Date(date.setDate(date.getDate() + 1)).toISOString()
                     }
                 },
-                include: ['items']
+                include: ['items', 'employee']
             });
 
             return sales;
@@ -74,7 +74,7 @@ class ReportService{
             throw boom.boomify(error);
         }
     }
-    
+
 }
 
 module.exports = ReportService

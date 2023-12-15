@@ -8,28 +8,28 @@ const ReportService = require('../services/reports.service');
 const router = Router()
 const service = new ReportService()
 
-router.get('/month',
+router.post('/month',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
     validatorHandler(queryReportMonthSchema, 'body'), async (req, res, next) => {
-    try {
-        const sales = await service.perMonth(req.body);
-        res.status(200).json(sales)
-    } catch (error) {
-        next(error)
-    }
-})
+        try {
+            const sales = await service.perMonth(req.body);
+            res.status(200).json(sales)
+        } catch (error) {
+            next(error)
+        }
+    })
 
-router.get('/day',
+router.post('/day',
     passport.authenticate('jwt', { session: false }),
     checkRoles('admin'),
     validatorHandler(queryReportDaySchema, 'body'), async (req, res, next) => {
-    try {
-        const sales = await service.perDay(req.body);
-        res.status(200).json(sales)
-    } catch (error) {
-        next(error)
-    }
-})
+        try {
+            const sales = await service.perDay(req.body);
+            res.status(200).json(sales)
+        } catch (error) {
+            next(error)
+        }
+    })
 
 module.exports = router
