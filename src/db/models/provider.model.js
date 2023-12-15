@@ -9,16 +9,38 @@ const ProviderSchame = {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    provFirstname: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true
+        field: "provider_firstname"
     },
-    email: {
+    provLastname: {
         type: DataTypes.STRING,
+        field: "provider_lastname"
     },
-    phone: {
-        type: DataTypes.STRING
+    provPhone: {
+        type: DataTypes.STRING,
+        field: "provider_phone"
+    },
+    provEmail: {
+        type: DataTypes.STRING,
+        field: "provider_email"
+    },
+    companyName: {
+        type: DataTypes.STRING,
+        field: "company_name"
+    },
+    companyAddress: {
+        type: DataTypes.STRING,
+        field: "company_address"
+    },
+    companyPhone: {
+        type: DataTypes.STRING(10),
+        field: "company_phone",
+    },
+    companyEmail: {
+        type: DataTypes.STRING,
+        field: "company_email"
     },
     createdAt: {
         type: DataTypes.DATE,
@@ -51,3 +73,22 @@ module.exports = {
     PROVIDER_TABLE,
     Provider
 }
+
+
+/*
+proveedor: {
+    {id: number,
+    datosPersonales:{
+        firstname: string,
+        lastname: string,
+        phone: string,
+        email: string,
+    },
+    datosEmpresa: {
+        name: string,
+        address: string,
+        phone: string,
+        email: string
+    },}
+}
+*/
