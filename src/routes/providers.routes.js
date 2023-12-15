@@ -42,7 +42,7 @@ router.post('/',
         try {
             const data = req.body
             const rta = await service.create(data)
-            res.status(200).json(rta)
+            res.status(201).json(rta)
         } catch (error) {
             next(error)
         }
